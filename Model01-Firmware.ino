@@ -22,6 +22,9 @@
 // Support for macros
 #include "Kaleidoscope-Macros.h"
 
+// Dual Use keys are essential
+#include "Kaleidoscope-DualUse.h"
+
 // Support for controlling the keyboard's LEDs
 #include "Kaleidoscope-LEDControl.h"
 
@@ -118,7 +121,7 @@ enum { MACRO_VERSION_INFO,
   *
   */
 
-enum { QWERTY, NUMPAD, FUNCTION }; // layers
+enum { MALTRON, NUMPAD, FUNCTION }; // layers
 
 /* This comment temporarily turns off astyle's indent enforcement
  *   so we can make the keymaps actually resemble the physical key layout better
@@ -127,19 +130,19 @@ enum { QWERTY, NUMPAD, FUNCTION }; // layers
 
 const Key keymaps[][ROWS][COLS] PROGMEM = {
 
-  [QWERTY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-   Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
+  [MALTRON] = KEYMAP_STACKED
+  (___,          Key_1,     Key_2,      Key_3, Key_4, Key_5,     Key_LEDEffectNext,
+   Key_Backtick, Key_Q,     Key_P,      Key_Y, Key_C, Key_B,     Key_Tab,
+   Key_PageUp,   Key_A,     Key_N,      Key_I, Key_S, Key_F,
+   Key_PageDown, Key_Comma, Key_Period, Key_J, Key_G, Key_Slash, Key_Escape,
+   Key_Backspace, SFT_T(E), Key_LeftGui, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
-   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
-                  Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
+   M(MACRO_ANY),  Key_6,         Key_7, Key_8, Key_9,     Key_0, LockLayer(NUMPAD),
+   Key_Enter,     Key_V,         Key_M, Key_U, Key_Z,     Key_L, Key_Equals,
+                  Key_D,         Key_T, Key_H, Key_O,     Key_R, Key_Quote,
+   Key_RightAlt,  Key_Semicolon, Key_W, Key_K, Key_Minus, Key_X, Key_RightControl,
+   Key_RightControl, Key_LeftAlt, SFT_T(Spacebar), MT(RightGui,Return),
    ShiftToLayer(FUNCTION)),
 
 
