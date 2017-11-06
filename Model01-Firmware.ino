@@ -23,7 +23,7 @@
 #include "Kaleidoscope-Macros.h"
 
 // Dual Use keys are essential
-#include "Kaleidoscope-DualUse.h"
+#include "Kaleidoscope-SpaceCadet.h"
 
 // Support for controlling the keyboard's LEDs
 #include "Kaleidoscope-LEDControl.h"
@@ -135,14 +135,14 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_Backtick, Key_Q,     Key_P,      Key_Y, Key_C, Key_B,     Key_Tab,
    Key_PageUp,   Key_A,     Key_N,      Key_I, Key_S, Key_F,
    Key_PageDown, Key_Comma, Key_Period, Key_J, Key_G, Key_Slash, Key_Escape,
-   Key_Backspace, SFT_T(E), Key_LeftGui, Key_LeftControl,
+   Key_Backspace, Key_E, Key_LeftGui, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
    M(MACRO_ANY),  Key_6,         Key_7, Key_8, Key_9,     Key_0, LockLayer(NUMPAD),
    Key_Enter,     Key_V,         Key_M, Key_U, Key_Z,     Key_L, Key_Equals,
                   Key_D,         Key_T, Key_H, Key_O,     Key_R, Key_Quote,
    Key_RightAlt,  Key_Semicolon, Key_W, Key_K, Key_Minus, Key_X, Key_RightControl,
-   Key_RightControl, Key_LeftAlt, SFT_T(Spacebar), MT(RightGui,Return),
+   Key_RightControl, Key_LeftAlt, Key_RightShift, Key_RightGui,
    ShiftToLayer(FUNCTION)),
 
 
@@ -260,8 +260,19 @@ static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
   */
 
 void setup() {
+  Kaleidoscope.use(&SpaceCadet);
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
+
+  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
+  //   {Key_LeftShift, Key_E, 200}
+    {Key_RightShift, Key_Spacebar, 200}
+    , {Key_RightGui, Key_Enter, 200}
+    , SPACECADET_MAP_END
+  };
+  //Set the map.
+  SpaceCadet.map = spacecadetmap;
+
 
   // Next, tell Kaleidoscope which plugins you want to use.
   // The order can be important. For example, LED effects are
@@ -271,35 +282,36 @@ void setup() {
     &BootGreetingEffect,
 
     // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
-    &TestMode,
+    // &TestMode,
 
     // LEDControl provides support for other LED modes
     &LEDControl,
 
     // We start with the LED effect that turns off all the LEDs.
-    &LEDOff,
+    // &LEDOff,
 
+    // The breathe effect slowly pulses all of the LEDs on your keyboard
+    &LEDBreatheEffect,
+    
     // The rainbow effect changes the color of all of the keyboard's keys at the same time
     // running through all the colors of the rainbow.
     &LEDRainbowEffect,
 
     // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
     // and slowly moves the rainbow across your keyboard
-    &LEDRainbowWaveEffect,
+    //    &LEDRainbowWaveEffect,
 
     // The chase effect follows the adventure of a blue pixel which chases a red pixel across
     // your keyboard. Spoiler: the blue pixel never catches the red pixel
-    &LEDChaseEffect,
+    //    &LEDChaseEffect,
 
     // These static effects turn your keyboard's LEDs a variety of colors
-    &solidRed, &solidOrange, &solidYellow, &solidGreen, &solidBlue, &solidIndigo, &solidViolet,
+    //    &solidRed, &solidOrange, &solidYellow, &solidGreen, &solidBlue, &solidIndigo, &solidViolet,
 
-    // The breathe effect slowly pulses all of the LEDs on your keyboard
-    &LEDBreatheEffect,
 
     // The AlphaSquare effect prints each character you type, using your
     // keyboard's LEDs as a display
-    &AlphaSquareEffect,
+    //    &AlphaSquareEffect,
 
     // The stalker effect lights up the keys you've pressed recently
     &StalkerEffect,
@@ -325,7 +337,7 @@ void setup() {
   // We set the brightness of the rainbow effects to 150 (on a scale of 0-255)
   // This draws more than 500mA, but looks much nicer than a dimmer effect
   LEDRainbowEffect.brightness(150);
-  LEDRainbowWaveEffect.brightness(150);
+  //  LEDRainbowWaveEffect.brightness(150);
 
   // The LED Stalker mode has a few effects. The one we like is
   // called 'BlazingTrail'. For details on other options,
